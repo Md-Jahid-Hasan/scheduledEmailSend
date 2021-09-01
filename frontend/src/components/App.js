@@ -8,6 +8,7 @@ import EmailAdd from "./SendEmail/AddEmail";
 import EmailList from "./SendEmail/EmailList";
 import PrivateRoute from "./Authentication/PrivateRoute";
 import {get_authenticate_user} from "../Action/auth";
+import Navbar from "./Navbar";
 
 const App = () => {
     useEffect(()=>(
@@ -16,6 +17,7 @@ const App = () => {
 
     return (
         <Provider store={store}>
+            <Navbar/>
            <Router>
                 <Fragment>
                     <Switch>

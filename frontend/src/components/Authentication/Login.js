@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {login_user} from "../../Action/auth";
-import {Redirect} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
 
 
 const Login = () => {
@@ -56,7 +56,7 @@ const Login = () => {
                             </div>
 
                             <div className="row m-2 d-md-flex justify-content-center">
-                                <a className="btn btn-primary col-8">Register</a>
+                                <Link to="/register" className="btn btn-primary col-8">Sign up</Link>
                             </div>
 
                         </div>

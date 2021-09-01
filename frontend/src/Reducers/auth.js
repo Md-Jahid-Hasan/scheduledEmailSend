@@ -1,4 +1,4 @@
-import {LOGIN_SUCCESS, REGISTRATION_SUCCESS, USER_LOGGEDIN} from "../Action/types";
+import {LOGGED_OUT, LOGIN_SUCCESS, REGISTRATION_SUCCESS, USER_LOGGEDIN} from "../Action/types";
 
 const initialState = {
     name: "",
@@ -8,10 +8,10 @@ const initialState = {
 }
 
 export default (state = initialState, action) => {
-    switch (action.type){
+    switch (action.type) {
         case LOGIN_SUCCESS:
             localStorage.setItem('access_token', action.payload.access)
-            return{
+            return {
                 ...state,
                 ...action.payload,
                 token: action.payload.access,
@@ -24,6 +24,13 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload
+            }
+        case LOGGED_OUT:
+            localStorage.removeItem('access_token')
+            return {
+                name: "",
+                email: "",
+                registered: false,
             }
         default:
             return state

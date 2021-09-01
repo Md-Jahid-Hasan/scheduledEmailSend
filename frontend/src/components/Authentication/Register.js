@@ -5,11 +5,11 @@ import {Redirect} from "react-router-dom";
 
 
 const Login = () => {
-    const [registerData, setRegisterData] = useState({email:"",name:"", password:"", verify_password:""})
+    const [registerData, setRegisterData] = useState({email: "", name: "", password: "", verify_password: ""})
     const dispatch = useDispatch()
     const is_registered = useSelector((state) => state.auth.registered)
 
-    if(is_registered)
+    if (is_registered)
         return <Redirect to="/login"/>
 
     const getLoginData = (event) => {
@@ -19,7 +19,7 @@ const Login = () => {
     }
 
 
-    return(
+    return (
         <div className="container">
             <div className="row justify-content-center">
                 <div className="col-sm-10 col-md-6 mt-3">
@@ -29,7 +29,7 @@ const Login = () => {
                             <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
                             <div className="col-sm-10">
                                 <input type="email" className="form-control" value={registerData.email}
-                                      placeholder="Enter you university email"
+                                       placeholder="Enter you university email"
                                        onChange={(e) => setRegisterData(
                                            {...registerData, email: e.target.value})}/>
                             </div>

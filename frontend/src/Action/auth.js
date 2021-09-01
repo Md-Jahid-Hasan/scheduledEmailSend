@@ -1,6 +1,6 @@
 import axios from "axios";
 import Cookies from 'js-cookie'
-import {LOGIN_SUCCESS, REGISTRATION_SUCCESS, USER_LOGGEDIN} from "./types";
+import {LOGGED_OUT, LOGIN_SUCCESS, REGISTRATION_SUCCESS, USER_LOGGEDIN} from "./types";
 import {host} from "../store";
 import {Redirect} from "react-router-dom";
 import React from "react";
@@ -63,4 +63,11 @@ export const get_authenticate_user = () => (dispatch, getState) => {
             })
         })
         .catch(err => console.log(err.data))
+}
+
+export const user_loggedOut = () => (dispatch, getState) => {
+    console.log("Logging out")
+    dispatch({
+        type: LOGGED_OUT
+    })
 }

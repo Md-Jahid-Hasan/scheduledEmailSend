@@ -9,7 +9,6 @@ const PrivateRoute = ({component: Component, ...rest}) => {
     if(auth.name && auth.email)
         isAuthenticated = true
 
-    console.log(auth, isAuthenticated)
     return (
     <div>
         <Route {...rest} render={
