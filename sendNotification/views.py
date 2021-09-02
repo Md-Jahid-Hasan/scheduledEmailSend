@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from celery.result import AsyncResult
 import pytz
 from django.shortcuts import render
 from django.utils import timezone
@@ -28,7 +28,17 @@ class SendEmail(generics.ListCreateAPIView):
         # send_email.delay(data.body, data.subject, data.email)
         print(timezone.now().astimezone(pytz.utc))
         print(data.send_time.astimezone(pytz.utc))
-        send_email.apply_async((data.body, data.subject, data.email), eta=data.send_time.astimezone(pytz.utc))
+        x = send_email.apply_async((data.body, data.subject, data.email), eta=data.send_time.astimezone(pytz.utc))
+        result = AsyncResult(x.task_id)
+        print(result.state)
+
+
+class ListEmail(generics.ListAPIView):
+    serializer_class = EmailSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def get_queryset(self):
+        return Notification.objects.filter(user=self.request.user).order_by('-send_time')
 
 
 

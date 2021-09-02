@@ -1,20 +1,23 @@
 import React, {useState, useEffect} from "react";
-import {login_user} from "../../Action/auth";
 import {useDispatch, useSelector} from "react-redux";
-import {get_authenticate_user} from "../../Action/email";
+import {set_schedule_mail} from "../../Action/email";
+import {Link, Redirect} from "react-router-dom";
 
 
 
 const EmailAdd = () => {
     const [mailData, setMailData] = useState({email: "", subject: "", body: "", send_time: ""})
     const dispatch = useDispatch()
-    //const is_registered = useSelector((state) => state.auth.registered)
+    const is_authenticated = useSelector((state) => state.auth)
+
+    if(!is_authenticated.name && !is_authenticated.email)
+        return <Redirect to={"/login"}/>
 
 
     const createScheduledMail = (event) => {
         event.preventDefault()
-        console.log("data", mailData)
-        dispatch(get_authenticate_user(mailData))
+        //console.log("data", mailData)
+        dispatch(set_schedule_mail(mailData))
     }
 
     return (
@@ -63,7 +66,8 @@ const EmailAdd = () => {
 
                         <div className="row">
                             <div className="row m-2 d-md-flex justify-content-center">
-                                <button type="submit" className="btn btn-primary col-8">Save Email</button>
+                                <button type="submit" className="btn btn-primary col-6 m-1">Save Email</button>
+                                <Link to="/mail-list" className="btn btn-primary col-4 m-1">Email List</Link>
                             </div>
 
                         </div>

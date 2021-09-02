@@ -10,23 +10,30 @@ const Navbar = () => {
     const history = useHistory();
 
     const got_to_register = () => {
-       let path = "/register";
+        let path = "/register";
         history.push(path);
     }
 
     const login_user = () => (
-        <button className="btn btn-outline-success" type="submit" onClick={()=>dispatch(user_loggedOut())}>Logout</button>
+        <div>
+            <button className="btn btn-outline-success m-2"
+                    onClick={() => dispatch(user_loggedOut())}>Logout
+            </button>
+        </div>
     )
+
     const loggedOut_user = () => {
         return (
             <div>
                 <button className="btn btn-outline-success"
-                        onClick={got_to_register}>Register</button>
+                        onClick={got_to_register}>Register
+                </button>
 
-                <button className="btn btn-outline-success" type="submit">Login</button>
+                <button className="btn btn-outline-success m-2" type="submit">Login</button>
             </div>
         )
     }
+
     return (
         <div>
             <nav className="navbar navbar-light bg-light">

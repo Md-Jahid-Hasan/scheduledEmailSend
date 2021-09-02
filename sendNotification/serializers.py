@@ -16,6 +16,7 @@ class CreateEmailSerializer(serializers.ModelSerializer):
 
 class EmailSerializer(serializers.ModelSerializer):
     user = serializers.StringRelatedField()
+    send_time = serializers.DateTimeField(format="%d-%m-%Y %H:%M:%S")
 
     class Meta:
         model = Notification

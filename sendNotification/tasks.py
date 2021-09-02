@@ -13,3 +13,5 @@ def send_email(body, subject, mail):
     email = mail.replace(" ", "").split(",")
     for m in email:
         send_mail(subject, body, EMAIL_HOST_USER, [m])
+
+    return "Done"

@@ -1,4 +1,4 @@
-import {LOGGED_OUT, LOGIN_SUCCESS, REGISTRATION_SUCCESS, USER_LOGGEDIN} from "../Action/types";
+import {AUTH_ERROR, LOGGED_OUT, LOGIN_SUCCESS, REGISTRATION_SUCCESS, USER_LOGGEDIN} from "../Action/types";
 
 const initialState = {
     name: "",
@@ -26,11 +26,13 @@ export default (state = initialState, action) => {
                 ...action.payload
             }
         case LOGGED_OUT:
+        case AUTH_ERROR:
             localStorage.removeItem('access_token')
             return {
                 name: "",
                 email: "",
                 registered: false,
+                token:null,
             }
         default:
             return state
