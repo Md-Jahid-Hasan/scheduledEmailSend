@@ -4,13 +4,13 @@ import {set_schedule_mail} from "../../Action/email";
 import {Link, Redirect} from "react-router-dom";
 
 
-
 const EmailAdd = () => {
     const [mailData, setMailData] = useState({email: "", subject: "", body: "", send_time: ""})
+    const [csvFile, setCSV] = useState()
     const dispatch = useDispatch()
     const is_authenticated = useSelector((state) => state.auth)
 
-    if(!is_authenticated.name && !is_authenticated.email)
+    if (!is_authenticated.name && !is_authenticated.email)
         return <Redirect to={"/login"}/>
 
 
@@ -18,6 +18,37 @@ const EmailAdd = () => {
         event.preventDefault()
         //console.log("data", mailData)
         dispatch(set_schedule_mail(mailData))
+    }
+
+    //console.log(csvFile)
+    const read_csv = (e) => {
+        setCSV(e.target.files[0])
+        const file = e.target.files[0];
+        const reader = new FileReader()
+
+        reader.onload = function (e) {
+            const text = e.target.result;
+            create_list_from_csv(text)
+        }
+
+        reader.readAsText(file);
+    }
+
+    const create_list_from_csv = (str, delim=",") => {
+        const headers = str.slice(0, str.indexOf('\n')).split(delim);
+        const rows = str.slice(str.indexOf('\n')+1).split('\n');
+
+        // console.log(str)
+        // console.log(str.indexOf('b'))
+
+        let mail_list = ""
+        rows.map((m, i) => {
+            if (m)
+                mail_list = mail_list.concat(m.slice(0, -1), ", ")
+        })
+        mail_list = mail_list.slice(0, -2)
+
+        setMailData({...mailData, email: mail_list})
     }
 
     return (
@@ -30,9 +61,17 @@ const EmailAdd = () => {
                             <label htmlFor="email" className="col-sm-2 col-form-label">Email</label>
                             <div className="col-sm-10">
                                 <input type="text" className="form-control" value={mailData.email}
-                                       placeholder="Enter you university email"
+                                       placeholder="Enter email"
                                        onChange={(e) => setMailData(
                                            {...mailData, email: e.target.value})}/>
+                            </div>
+                        </div>
+
+                        <div className="mb-3 row">
+                            <label htmlFor="email" className="col-sm-2 col-form-label">Upload CSV file</label>
+                            <div className="col-sm-10">
+                                <input type="file" accept=".csv" className="form-control"
+                                       onChange={(e) => read_csv(e)}/>
                             </div>
                         </div>
 

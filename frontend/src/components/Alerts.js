@@ -8,6 +8,11 @@ const Alerts = () => {
     const [show, setShow] = useState(false)
     const message = useSelector((state) => state.alert)
     const [alert_type, setAlert_Type] = useState({msg:"", status:null})
+    useEffect(() =>{
+        if (show === true){
+            dispatch(clear_alert())
+        }
+    }, [show])
 
     useEffect(() => {
         if (loaded.current) {
@@ -17,6 +22,8 @@ const Alerts = () => {
 
                 const timer = setInterval(() => setShow(false), 5000)
                 return () => clearInterval(timer)
+            } else{
+                setShow(false)
             }
         } else{
             loaded.current = true
@@ -33,7 +40,7 @@ const Alerts = () => {
 
     return(
         <div>
-            {show && alertBox()}
+            {show && alert_type.status && alertBox()}
         </div>
     )
 }

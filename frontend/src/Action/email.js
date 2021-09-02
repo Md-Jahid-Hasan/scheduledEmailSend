@@ -1,7 +1,7 @@
 import axios from "axios";
 import {getHeader} from "./auth";
 import {host} from "../store";
-import {ADD_ALERT, ERROR_ALERT, GET_EMAIL} from "./types";
+import {ADD_ALERT, CLEAR_ALERT, ERROR_ALERT, GET_EMAIL} from "./types";
 
 export const set_schedule_mail = (mail_data) => (dispatch, getState) => {
     axios.post(`${host}/email/api/notification-add/`, mail_data, getHeader(getState))
@@ -59,7 +59,6 @@ export const bad_alert = (dispatch) => {
 
 export const clear_alert = ()=> (dispatch) => {
     dispatch({
-        type: ERROR_ALERT,
-        payload: null
+        type: CLEAR_ALERT,
     })
 }
